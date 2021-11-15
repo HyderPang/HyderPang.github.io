@@ -154,6 +154,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-一维码缺陷检测" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/">一维码缺陷检测</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/" class="archive-article-date">
+  	<time datetime="2021-11-15T11:36:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h2><p>一维条码中可能存在的断码、白点、黑点等影响条码外观的瑕疵，需要检测这些瑕疵，并用矩形框将其标出。</p>
+<p>本文采用了python-opencv环境实现，本作业的条形码缺陷检测方法分为条形码区域检测、旋转校正、垂直单向膨胀差分、开运算等几步实现，对于低干扰条件下的条形码缺陷有着比较良好的检测效果。</p>
+<p>本文第2节介绍了方法原理，第3节展示了结果，第4节总结了不足。</p>
+        
+          <a class="article-more-a" href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-无需重新初始化的水平集演化模型复现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -174,91 +256,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="无需重新初始化的水平集演化模型复现"><a href="#无需重新初始化的水平集演化模型复现" class="headerlink" title="无需重新初始化的水平集演化模型复现"></a><center>无需重新初始化的水平集演化模型复现</center></h1><h2 id="1-算法基本原理"><a href="#1-算法基本原理" class="headerlink" title="1.算法基本原理"></a>1.算法基本原理</h2><p>本文复现了Chunming Li等<a href="#LiChunming"><sup>1</sup></a>的无需重新初始化的水平集演化工作(<em>Level set evolution without re-initialization: a new variational formulation</em>)。Chunming Li等人的工作基于Kass M等<a href="#Kass"><sup>2</sup></a>的主动轮廓模型工作(<em>SNAKES - ACTIVE CONTOUR MODELS</em>)。该方法用于提取图像中的物体轮廓。</p>
-<p>根据Chunming Li等<a href="#LiChunming"><sup>1</sup></a>,水平集函数$\phi$的演化方程如下：</p>
-<script type="math/tex; mode=display">
-\frac{\partial \phi}{\partial t} = \mu[\Delta\phi-div(\frac{\nabla \phi}{\left | \nabla\phi \right |} )]+\lambda\delta_\epsilon(\phi)div(g\frac{\nabla \phi}{\left | \nabla \phi \right |}) +\nu g \delta_\epsilon(\phi)
-\tag{1}</script><p>其中第一项中的$\alpha$，第一项用于控制水平集函数不偏离符号距离函数。后两项为用于驱动水平集函数$\phi$演化的能量函数，其中第二项中$\lambda&gt;0$，该项表示 $\phi$的零水平集曲线的长度；第三项用于加速曲线演化，$\nu&gt;0$时会加速曲线收缩，而$\nu&lt;0$时会加速曲线膨胀。</p>
-<p>演化方程中的其它定义如下:</p>
-<ul>
-<li><p>$\Delta \phi$ ：表示水平集函数$\phi$的散度。</p>
-</li>
-<li><p>$\frac{\nabla\phi}{|\nabla\phi|}$：表示水平集函数$的归一化梯度。</p>
-</li>
-<li><p>$div(f)$：表示对函数$f$求散度。</p>
-</li>
-<li><p>$\delta_\epsilon(\phi)$：表示冲激函数，其宽度$\epsilon$建议取1.5，定义如下：</p>
-<script type="math/tex; mode=display">
-\delta_\epsilon(\phi) = \begin{cases}
-  0, |x|>\epsilon\\ 
-  \frac{1}{2\epsilon}[1+cos(\frac{\pi x}{\epsilon})], |x| \leq \epsilon 
-\end{cases}
-\tag{2}</script></li>
-<li><p>g为图像边沿指示函数，定义如下：</p>
-<script type="math/tex; mode=display">
-g=\frac{1}{1+|\nabla G_\sigma * I|^2}
-\tag{3}</script><p>其中$\nabla G_\sigma$表示标准差为$\sigma$的高斯卷积核，I则为单通道原始图像。</p>
-</li>
-</ul>
-<p>在演化方程离散化过程中，需要定义新的参数$\tau$表示时间步进值。用泛函数$L(\phi_k)$表示演化方程方程(1)右侧，也即每次演化迭代的增量，这一过程本文使用了Matlab的内置函数实现，具体细节可以参考Chunming Li等<a href="#LiChunming"><sup>1</sup></a>。可以写为：</p>
-<script type="math/tex; mode=display">
-\phi_{k+1}=\phi_k +\tau L(\phi_k)
-\tag{4}</script><p>对于$\phi_k$的初始值$\phi_0$，指定常数$\rho$（$\rho &gt; 2\epsilon$，例如可以取6），可以如下简单的初始化:</p>
-<script type="math/tex; mode=display">
-\phi_0(x,y)=\begin{cases}
--\rho, (x,y) \ inside \ boundaries. \\
-0, (x,y) \ in \ boundaries. \\
-\rho, (x,y) \ outside \ boundaries. 
-\end{cases}
-\tag{5}</script><h2 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2.代码实现"></a>2.代码实现</h2><p>读取图像并转换为浮点型单通道矩阵。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">img_name = <span class="string">&#x27;three.bmp&#x27;</span>;</span><br><span class="line">Img=imread(img_name);</span><br><span class="line">I=double(rgb2gray(Img));</span><br></pre></td></tr></table></figure>
-<p>初始化$\phi_0$。针对不同的检测目标位置，往往需要不同的初始化水平集函数。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ic=nrow/<span class="number">2</span>;</span><br><span class="line">jc=ncol/<span class="number">2</span>;</span><br><span class="line">r=<span class="number">5</span></span><br><span class="line">rho=<span class="number">6</span>;</span><br><span class="line">phi_0 = rho*<span class="built_in">ones</span>(<span class="built_in">size</span>(I));</span><br><span class="line">phi_0(ic-r:ic+r,jc-r:jc+r)=-rho; </span><br></pre></td></tr></table></figure>
-<p>参数设置。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">delta_t = <span class="number">0.5</span>;</span><br><span class="line">lambda = <span class="number">5</span>;<span class="comment">% edge regulation term factor.</span></span><br><span class="line">nu = <span class="number">-3</span>;<span class="comment">% area regulation term factor.</span></span><br><span class="line">epsilon=<span class="number">1.5</span>;</span><br><span class="line">mu = <span class="number">0.4</span>; <span class="comment">% distance regulation term factor.</span></span><br><span class="line">sigma = <span class="number">0.5</span>;</span><br><span class="line">max_iteration = <span class="number">400</span>;</span><br></pre></td></tr></table></figure>
-<p>初始化边沿指示函数$g$。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">G = fspecial(<span class="string">&#x27;gaussian&#x27;</span>, <span class="number">5</span>, sigma);</span><br><span class="line">I = conv2(I, G, <span class="string">&#x27;same&#x27;</span>);</span><br><span class="line">[Ix, Iy] = gradient(I);</span><br><span class="line">g = <span class="number">1.</span>/(<span class="number">1</span> + Ix.^<span class="number">2</span> + Iy.^<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<p>进行演化迭代。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">phi=phi_0;</span><br><span class="line">numIter = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">for</span> k=<span class="number">1</span>:max_iteration/numIter</span><br><span class="line">	phi = evolution_cv(phi, g, mu, nu, lambda, delta_t, epsilon, numIter);   <span class="comment">% update level set function</span></span><br><span class="line"><span class="keyword">end</span> </span><br></pre></td></tr></table></figure>
-<p>展示结果。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hold on</span><br><span class="line">imshow(uint8(I));</span><br><span class="line">contour(phi,0,&#x27;r&#x27;); </span><br></pre></td></tr></table></figure>
-<p>演化方程函数如下</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">phi</span> = <span class="title">evolution_cv</span><span class="params">(phi0, g, mu, nu, lambda, delta_t, epsilon, numIter)</span></span></span><br><span class="line"></span><br><span class="line">phi = BoundMirrorExpand(phi0);<span class="comment">%边沿镜像延拓，用于卷积</span></span><br><span class="line">g = BoundMirrorExpand(g);</span><br><span class="line">[gx, gy]=gradient(g);</span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span> : numIter</span><br><span class="line">    phi = BoundMirrorEnsure(phi);<span class="comment">%确保边沿镜像对称</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">% μ[ΔФ-div(▽Ф/|▽Ф|)]</span></span><br><span class="line">    <span class="comment">% distance</span></span><br><span class="line">    [phi_x,phi_y]=gradient(phi);</span><br><span class="line">    norm_div=<span class="built_in">sqrt</span>(phi_x.^<span class="number">2</span> + phi_y.^<span class="number">2</span>);</span><br><span class="line">    phi_nx=phi_x./(norm_div+<span class="number">1e-10</span>);</span><br><span class="line">    phi_ny=phi_y./(norm_div+<span class="number">1e-10</span>);</span><br><span class="line">    curv = div(phi_nx, phi_ny);</span><br><span class="line">    formula_1 = <span class="number">4</span>*del2(phi) - curv;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% λ[δ(Ф)div(g▽Ф/|▽Ф|)]</span></span><br><span class="line">    <span class="comment">% edge.</span></span><br><span class="line">    diracPhi = dirac(phi,epsilon);</span><br><span class="line">    formula_2 = diracPhi.*(gx.*phi_nx + gy.*phi_ny) + diracPhi .*g .* curv;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% ν[gδ(Ф)]</span></span><br><span class="line">    <span class="comment">% aera.</span></span><br><span class="line">    formula_3 = diracPhi.* g;</span><br><span class="line"></span><br><span class="line">    <span class="comment">% updating the phi function</span></span><br><span class="line">    <span class="comment">% μformula_1 + λformula_2 + νformula_3</span></span><br><span class="line">    phi=phi+delta_t*(mu*formula_1 + lambda*formula_2 + nu*formula_3);    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">phi = BoundMirrorShrink(phi); <span class="comment">% 去掉延拓的边缘</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% define div. For divergence.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">res</span> = <span class="title">div</span><span class="params">(fx,fy)</span></span></span><br><span class="line">[fxx,~]=gradient(fx);  </span><br><span class="line">[~,fyy]=gradient(fy);</span><br><span class="line">res=fxx+fyy;</span><br><span class="line"></span><br><span class="line"><span class="comment">% define dirac. For dirac funtion.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">dirac</span><span class="params">(phi, epsilon)</span></span></span><br><span class="line">f=(<span class="number">1</span>/<span class="number">2</span>/epsilon).*(<span class="number">1</span>+<span class="built_in">cos</span>(<span class="built_in">pi</span>.*phi/epsilon));</span><br><span class="line">mask = (phi&lt;=epsilon) &amp; (phi&gt;=-epsilon);</span><br><span class="line">f = f.*mask;</span><br><span class="line"></span><br><span class="line"><span class="comment">%% BoundMirror funcitons.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorEnsure</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line"><span class="keyword">if</span> (m&lt;<span class="number">3</span> | n&lt;<span class="number">3</span>) </span><br><span class="line">    error(<span class="string">&#x27;either the number of rows or columns is smaller than 3&#x27;</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">yi = <span class="number">2</span>:m<span class="number">-1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n<span class="number">-1</span>;</span><br><span class="line">B = A;</span><br><span class="line">B([<span class="number">1</span> m],[<span class="number">1</span> n]) = B([<span class="number">3</span> m<span class="number">-2</span>],[<span class="number">3</span> n<span class="number">-2</span>]);  <span class="comment">% mirror corners</span></span><br><span class="line">B([<span class="number">1</span> m],xi) = B([<span class="number">3</span> m<span class="number">-2</span>],xi);          <span class="comment">% mirror left and right boundary</span></span><br><span class="line">B(yi,[<span class="number">1</span> n]) = B(yi,[<span class="number">3</span> n<span class="number">-2</span>]);          <span class="comment">% mirror top and bottom boundary</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorExpand</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line">yi = <span class="number">2</span>:m+<span class="number">1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n+<span class="number">1</span>;</span><br><span class="line">B = <span class="built_in">zeros</span>(m+<span class="number">2</span>,n+<span class="number">2</span>);</span><br><span class="line">B(yi,xi) = A;</span><br><span class="line">B([<span class="number">1</span> m+<span class="number">2</span>],[<span class="number">1</span> n+<span class="number">2</span>]) = B([<span class="number">3</span> m],[<span class="number">3</span> n]);  <span class="comment">% mirror corners</span></span><br><span class="line">B([<span class="number">1</span> m+<span class="number">2</span>],xi) = B([<span class="number">3</span> m],xi);          <span class="comment">% mirror left and right boundary</span></span><br><span class="line">B(yi,[<span class="number">1</span> n+<span class="number">2</span>]) = B(yi,[<span class="number">3</span> n]);          <span class="comment">% mirror top and bottom boundary</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorShrink</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line">yi = <span class="number">2</span>:m<span class="number">-1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n<span class="number">-1</span>;</span><br><span class="line">B = A(yi,xi);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="3-测试结果"><a href="#3-测试结果" class="headerlink" title="3.测试结果"></a>3.测试结果</h2><ul>
-<li><p>twocells</p>
-<p>主要参数：$\tau=5, \mu=0.04, \lambda=5, \nu=1.5,\epsilon=1.5, \sigma=1.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells.gif" alt="twoCells"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells_phi.jpg" alt="twoCells_phi"></p>
-</li>
-<li><p>three</p>
-<p>主要参数：$\tau=0.5, \mu=0.4, \lambda=5, \nu=-3,\epsilon=1.5, \sigma=0.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.gif" alt="three"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.jpg" alt="three"></p>
-</li>
-<li><p>Chunming Li等<a href="#LiChunming"><sup>1</sup></a> Fig. 3</p>
-<p>主要参数：$\tau=3, \mu=0.04, \lambda=5, \nu=3,\epsilon=1.5, \sigma=0.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.gif" alt="Li_Chunming"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.jpg" alt="Li_Chunming"></p>
-</li>
-<li><p>vessel</p>
-<p>主要参数：$\tau=5, \mu=0.04, \lambda=5, \nu=1.5,\epsilon=1.5, \sigma=1.5$。</p>
-<p>使用了鼠标选择多个点初始化水平集函数，演化过程中选择点分别作为边界内和边界外来更改水平集函数。演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/vessel.gif" alt="vessel"></p>
-</li>
-</ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><div id="LiChunming"></div>
-
-<p>[1]Chunming Li, Chenyang Xu, Changfeng Gui and M. D. Fox, “Level set evolution without re-initialization: a new variational formulation,” 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR’05), 2005, pp. 430-436 vol. 1, doi: 10.1109/CVPR.2005.213.<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/1467299">https://ieeexplore.ieee.org/document/1467299</a>.</p>
-<div id="KASS"></div>
-
-<p>[2]Kass M, WITKIN A, TERZOPOULOS D, “SNAKES - ACTIVE CONTOUR MODELS,” INTERNATIONAL JOURNAL OF COMPUTER VISION,1987, pp. 321-331 no.4  vol.1, doi:10.1007/BF00133570.<a target="_blank" rel="noopener" href="https://link.springer.com/article/10.1007%2FBF00133570">https://link.springer.com/article/10.1007%2FBF00133570</a></p>
-
+        <h2 id="1-算法基本原理"><a href="#1-算法基本原理" class="headerlink" title="1.算法基本原理"></a>1.算法基本原理</h2><p>本文使用matlab复现了Chunming Li等<a href="#LiChunming"><sup>1</sup></a>的无需重新初始化的水平集演化工作(<em>Level set evolution without re-initialization: a new variational formulation</em>)。Chunming Li等人的工作基于Kass M等<a href="#Kass"><sup>2</sup></a>的主动轮廓模型工作(<em>SNAKES - ACTIVE CONTOUR MODELS</em>)。该方法用于提取图像中的物体轮廓。</p>
+        
+          <a class="article-more-a" href="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/#more">more >></a>
+        
       
 
       
@@ -289,6 +290,10 @@ g=\frac{1}{1+|\nabla G_\sigma * I|^2}
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">matlab</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -298,69 +303,6 @@ g=\frac{1}{1+|\nabla G_\sigma * I|^2}
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-helloworld" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/15/helloworld/">helloworld</a>
-    </h1>
-  
-
-        
-        <a href="/2021/11/15/helloworld/" class="archive-article-date">
-  	<time datetime="2021-11-15T05:13:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>HELLO!这是本人的个人博客，将会记录一些在Electronic Engineering、 Computer Vision、Remote Sensing等领域的学习记录，希望对您有所裨益：)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/15/helloworld/">展开全文 >></a>
         </p>
       
 
@@ -521,6 +463,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,33 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://HyderPang.github.io">
-  <title>无需重新初始化的水平集演化模型复现 | Hyder&#39;s blog</title>
+  <title>一维码缺陷检测 | Hyder&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.算法基本原理本文使用matlab复现了Chunming Li等1的无需重新初始化的水平集演化工作(Level set evolution without re-initialization: a new variational formulation)。Chunming Li等人的工作基于Kass M等2的主动轮廓模型工作(SNAKES - ACTIVE CONTOUR MODELS)。该方法">
+  <meta name="description" content="1.背景一维条码中可能存在的断码、白点、黑点等影响条码外观的瑕疵，需要检测这些瑕疵，并用矩形框将其标出。 本文采用了python-opencv环境实现，本作业的条形码缺陷检测方法分为条形码区域检测、旋转校正、垂直单向膨胀差分、开运算等几步实现，对于低干扰条件下的条形码缺陷有着比较良好的检测效果。 本文第2节介绍了方法原理，第3节展示了结果，第4节总结了不足。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无需重新初始化的水平集演化模型复现">
-<meta property="og:url" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:title" content="一维码缺陷检测">
+<meta property="og:url" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/index.html">
 <meta property="og:site_name" content="Hyder&#39;s blog">
-<meta property="og:description" content="1.算法基本原理本文使用matlab复现了Chunming Li等1的无需重新初始化的水平集演化工作(Level set evolution without re-initialization: a new variational formulation)。Chunming Li等人的工作基于Kass M等2的主动轮廓模型工作(SNAKES - ACTIVE CONTOUR MODELS)。该方法">
+<meta property="og:description" content="1.背景一维条码中可能存在的断码、白点、黑点等影响条码外观的瑕疵，需要检测这些瑕疵，并用矩形框将其标出。 本文采用了python-opencv环境实现，本作业的条形码缺陷检测方法分为条形码区域检测、旋转校正、垂直单向膨胀差分、开运算等几步实现，对于低干扰条件下的条形码缺陷有着比较良好的检测效果。 本文第2节介绍了方法原理，第3节展示了结果，第4节总结了不足。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells.gif">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells_phi.jpg">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.gif">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.jpg">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.gif">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.jpg">
-<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/vessel.gif">
-<meta property="article:published_time" content="2021-11-15T05:25:54.000Z">
-<meta property="article:modified_time" content="2021-11-15T12:16:50.065Z">
+<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/algorithm_flowchart.png">
+<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/my_method.png">
+<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/raw_images.png">
+<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/result_0.png">
+<meta property="og:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/result_1.png">
+<meta property="article:published_time" content="2021-11-15T11:36:39.000Z">
+<meta property="article:modified_time" content="2021-11-15T12:16:59.688Z">
 <meta property="article:author" content="Hyder Pang">
-<meta property="article:tag" content="level set">
-<meta property="article:tag" content="水平集">
-<meta property="article:tag" content="复现">
-<meta property="article:tag" content="图像分割">
-<meta property="article:tag" content="matlab">
 <meta property="article:tag" content="CV">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells.gif">
+<meta name="twitter:image" content="http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/一维码缺陷检测/images/algorithm_flowchart.png">
   
     <link rel="alternative" href="/atom.xml" title="Hyder&#39;s blog" type="application/atom+xml">
   
@@ -170,111 +164,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-无需重新初始化的水平集演化模型复现" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-一维码缺陷检测" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      无需重新初始化的水平集演化模型复现
+      一维码缺陷检测
     </h1>
   
 
         
-        <a href="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-11-15T05:25:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-15</time>
+        <a href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/" class="archive-article-date">
+  	<time datetime="2021-11-15T11:36:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-算法基本原理"><a href="#1-算法基本原理" class="headerlink" title="1.算法基本原理"></a>1.算法基本原理</h2><p>本文使用matlab复现了Chunming Li等<a href="#LiChunming"><sup>1</sup></a>的无需重新初始化的水平集演化工作(<em>Level set evolution without re-initialization: a new variational formulation</em>)。Chunming Li等人的工作基于Kass M等<a href="#Kass"><sup>2</sup></a>的主动轮廓模型工作(<em>SNAKES - ACTIVE CONTOUR MODELS</em>)。该方法用于提取图像中的物体轮廓。</p>
+        <h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h2><p>一维条码中可能存在的断码、白点、黑点等影响条码外观的瑕疵，需要检测这些瑕疵，并用矩形框将其标出。</p>
+<p>本文采用了python-opencv环境实现，本作业的条形码缺陷检测方法分为条形码区域检测、旋转校正、垂直单向膨胀差分、开运算等几步实现，对于低干扰条件下的条形码缺陷有着比较良好的检测效果。</p>
+<p>本文第2节介绍了方法原理，第3节展示了结果，第4节总结了不足。</p>
 <span id="more"></span>
-<p>根据Chunming Li等<a href="#LiChunming"><sup>1</sup></a>,水平集函数$\phi$的演化方程如下：</p>
-<script type="math/tex; mode=display">
-\frac{\partial \phi}{\partial t} = \mu[\Delta\phi-div(\frac{\nabla \phi}{\left | \nabla\phi \right |} )]+\lambda\delta_\epsilon(\phi)div(g\frac{\nabla \phi}{\left | \nabla \phi \right |}) +\nu g \delta_\epsilon(\phi)
-\tag{1}</script><p>其中第一项中的$\alpha$，第一项用于控制水平集函数不偏离符号距离函数。后两项为用于驱动水平集函数$\phi$演化的能量函数，其中第二项中$\lambda&gt;0$，该项表示 $\phi$的零水平集曲线的长度；第三项用于加速曲线演化，$\nu&gt;0$时会加速曲线收缩，而$\nu&lt;0$时会加速曲线膨胀。</p>
-<p>演化方程中的其它定义如下:</p>
+<h2 id="2-条形码缺陷检测方法"><a href="#2-条形码缺陷检测方法" class="headerlink" title="2.条形码缺陷检测方法"></a>2.条形码缺陷检测方法</h2><p>本文的主要检测方法如下所示，其中主要过程及其结果见图<a href="#flowchart">1</a>：</p>
 <ul>
-<li><p>$\Delta \phi$ ：表示水平集函数$\phi$的散度。</p>
+<li><p>条形码区域识别。使用OTSU方法二值化，使用横向矩形核对二值化图形进行膨胀，提取较大连通域，得到条形码区域。本文也实现了一种基于HOG特征的条形码识别方法。</p>
 </li>
-<li><p>$\frac{\nabla\phi}{|\nabla\phi|}$：表示水平集函数$的归一化梯度。</p>
+<li><p>条形码旋转校正。使用Canny算子提取条形码边缘，利用霍夫变换提取线条角度，根据角度旋转条形码区域。</p>
 </li>
-<li><p>$div(f)$：表示对函数$f$求散度。</p>
-</li>
-<li><p>$\delta_\epsilon(\phi)$：表示冲激函数，其宽度$\epsilon$建议取1.5，定义如下：</p>
-<script type="math/tex; mode=display">
-\delta_\epsilon(\phi) = \begin{cases}
-  0, |x|>\epsilon\\ 
-  \frac{1}{2\epsilon}[1+cos(\frac{\pi x}{\epsilon})], |x| \leq \epsilon 
-\end{cases}
-\tag{2}</script></li>
-<li><p>g为图像边沿指示函数，定义如下：</p>
-<script type="math/tex; mode=display">
-g=\frac{1}{1+|\nabla G_\sigma * I|^2}
-\tag{3}</script><p>其中$\nabla G_\sigma$表示标准差为$\sigma$的高斯卷积核，I则为单通道原始图像。</p>
+<li><p>条形码缺陷区域检测。对旋转后的条形码区域进行二值化，并与进行垂直膨胀后的结果进行差分，对差分结果使用开运算，提取到缺陷区域。</p>
 </li>
 </ul>
-<p>在演化方程离散化过程中，需要定义新的参数$\tau$表示时间步进值。用泛函数$L(\phi_k)$表示演化方程方程(1)右侧，也即每次演化迭代的增量，这一过程本文使用了Matlab的内置函数实现，具体细节可以参考Chunming Li等<a href="#LiChunming"><sup>1</sup></a>。可以写为：</p>
-<script type="math/tex; mode=display">
-\phi_{k+1}=\phi_k +\tau L(\phi_k)
-\tag{4}</script><p>对于$\phi_k$的初始值$\phi_0$，指定常数$\rho$（$\rho &gt; 2\epsilon$，例如可以取6），可以如下简单的初始化:</p>
-<script type="math/tex; mode=display">
-\phi_0(x,y)=\begin{cases}
--\rho, (x,y) \ inside \ boundaries. \\
-0, (x,y) \ in \ boundaries. \\
-\rho, (x,y) \ outside \ boundaries. 
-\end{cases}
-\tag{5}</script><h2 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2.代码实现"></a>2.代码实现</h2><p>读取图像并转换为浮点型单通道矩阵。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">img_name = <span class="string">&#x27;three.bmp&#x27;</span>;</span><br><span class="line">Img=imread(img_name);</span><br><span class="line">I=double(rgb2gray(Img));</span><br></pre></td></tr></table></figure>
-<p>初始化$\phi_0$。针对不同的检测目标位置，往往需要不同的初始化水平集函数。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ic=nrow/<span class="number">2</span>;</span><br><span class="line">jc=ncol/<span class="number">2</span>;</span><br><span class="line">r=<span class="number">5</span></span><br><span class="line">rho=<span class="number">6</span>;</span><br><span class="line">phi_0 = rho*<span class="built_in">ones</span>(<span class="built_in">size</span>(I));</span><br><span class="line">phi_0(ic-r:ic+r,jc-r:jc+r)=-rho; </span><br></pre></td></tr></table></figure>
-<p>参数设置。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">delta_t = <span class="number">0.5</span>;</span><br><span class="line">lambda = <span class="number">5</span>;<span class="comment">% edge regulation term factor.</span></span><br><span class="line">nu = <span class="number">-3</span>;<span class="comment">% area regulation term factor.</span></span><br><span class="line">epsilon=<span class="number">1.5</span>;</span><br><span class="line">mu = <span class="number">0.4</span>; <span class="comment">% distance regulation term factor.</span></span><br><span class="line">sigma = <span class="number">0.5</span>;</span><br><span class="line">max_iteration = <span class="number">400</span>;</span><br></pre></td></tr></table></figure>
-<p>初始化边沿指示函数$g$。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">G = fspecial(<span class="string">&#x27;gaussian&#x27;</span>, <span class="number">5</span>, sigma);</span><br><span class="line">I = conv2(I, G, <span class="string">&#x27;same&#x27;</span>);</span><br><span class="line">[Ix, Iy] = gradient(I);</span><br><span class="line">g = <span class="number">1.</span>/(<span class="number">1</span> + Ix.^<span class="number">2</span> + Iy.^<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<p>进行演化迭代。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">phi=phi_0;</span><br><span class="line">numIter = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">for</span> k=<span class="number">1</span>:max_iteration/numIter</span><br><span class="line">	phi = evolution_cv(phi, g, mu, nu, lambda, delta_t, epsilon, numIter);   <span class="comment">% update level set function</span></span><br><span class="line"><span class="keyword">end</span> </span><br></pre></td></tr></table></figure>
-<p>展示结果。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hold on</span><br><span class="line">imshow(uint8(I));</span><br><span class="line">contour(phi,0,&#x27;r&#x27;); </span><br></pre></td></tr></table></figure>
-<p>演化方程函数如下</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">phi</span> = <span class="title">evolution_cv</span><span class="params">(phi0, g, mu, nu, lambda, delta_t, epsilon, numIter)</span></span></span><br><span class="line"></span><br><span class="line">phi = BoundMirrorExpand(phi0);<span class="comment">%边沿镜像延拓，用于卷积</span></span><br><span class="line">g = BoundMirrorExpand(g);</span><br><span class="line">[gx, gy]=gradient(g);</span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span> : numIter</span><br><span class="line">    phi = BoundMirrorEnsure(phi);<span class="comment">%确保边沿镜像对称</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">% μ[ΔФ-div(▽Ф/|▽Ф|)]</span></span><br><span class="line">    <span class="comment">% distance</span></span><br><span class="line">    [phi_x,phi_y]=gradient(phi);</span><br><span class="line">    norm_div=<span class="built_in">sqrt</span>(phi_x.^<span class="number">2</span> + phi_y.^<span class="number">2</span>);</span><br><span class="line">    phi_nx=phi_x./(norm_div+<span class="number">1e-10</span>);</span><br><span class="line">    phi_ny=phi_y./(norm_div+<span class="number">1e-10</span>);</span><br><span class="line">    curv = div(phi_nx, phi_ny);</span><br><span class="line">    formula_1 = <span class="number">4</span>*del2(phi) - curv;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% λ[δ(Ф)div(g▽Ф/|▽Ф|)]</span></span><br><span class="line">    <span class="comment">% edge.</span></span><br><span class="line">    diracPhi = dirac(phi,epsilon);</span><br><span class="line">    formula_2 = diracPhi.*(gx.*phi_nx + gy.*phi_ny) + diracPhi .*g .* curv;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% ν[gδ(Ф)]</span></span><br><span class="line">    <span class="comment">% aera.</span></span><br><span class="line">    formula_3 = diracPhi.* g;</span><br><span class="line"></span><br><span class="line">    <span class="comment">% updating the phi function</span></span><br><span class="line">    <span class="comment">% μformula_1 + λformula_2 + νformula_3</span></span><br><span class="line">    phi=phi+delta_t*(mu*formula_1 + lambda*formula_2 + nu*formula_3);    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">phi = BoundMirrorShrink(phi); <span class="comment">% 去掉延拓的边缘</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% define div. For divergence.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">res</span> = <span class="title">div</span><span class="params">(fx,fy)</span></span></span><br><span class="line">[fxx,~]=gradient(fx);  </span><br><span class="line">[~,fyy]=gradient(fy);</span><br><span class="line">res=fxx+fyy;</span><br><span class="line"></span><br><span class="line"><span class="comment">% define dirac. For dirac funtion.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">dirac</span><span class="params">(phi, epsilon)</span></span></span><br><span class="line">f=(<span class="number">1</span>/<span class="number">2</span>/epsilon).*(<span class="number">1</span>+<span class="built_in">cos</span>(<span class="built_in">pi</span>.*phi/epsilon));</span><br><span class="line">mask = (phi&lt;=epsilon) &amp; (phi&gt;=-epsilon);</span><br><span class="line">f = f.*mask;</span><br><span class="line"></span><br><span class="line"><span class="comment">%% BoundMirror funcitons.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorEnsure</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line"><span class="keyword">if</span> (m&lt;<span class="number">3</span> | n&lt;<span class="number">3</span>) </span><br><span class="line">    error(<span class="string">&#x27;either the number of rows or columns is smaller than 3&#x27;</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">yi = <span class="number">2</span>:m<span class="number">-1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n<span class="number">-1</span>;</span><br><span class="line">B = A;</span><br><span class="line">B([<span class="number">1</span> m],[<span class="number">1</span> n]) = B([<span class="number">3</span> m<span class="number">-2</span>],[<span class="number">3</span> n<span class="number">-2</span>]);  <span class="comment">% mirror corners</span></span><br><span class="line">B([<span class="number">1</span> m],xi) = B([<span class="number">3</span> m<span class="number">-2</span>],xi);          <span class="comment">% mirror left and right boundary</span></span><br><span class="line">B(yi,[<span class="number">1</span> n]) = B(yi,[<span class="number">3</span> n<span class="number">-2</span>]);          <span class="comment">% mirror top and bottom boundary</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorExpand</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line">yi = <span class="number">2</span>:m+<span class="number">1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n+<span class="number">1</span>;</span><br><span class="line">B = <span class="built_in">zeros</span>(m+<span class="number">2</span>,n+<span class="number">2</span>);</span><br><span class="line">B(yi,xi) = A;</span><br><span class="line">B([<span class="number">1</span> m+<span class="number">2</span>],[<span class="number">1</span> n+<span class="number">2</span>]) = B([<span class="number">3</span> m],[<span class="number">3</span> n]);  <span class="comment">% mirror corners</span></span><br><span class="line">B([<span class="number">1</span> m+<span class="number">2</span>],xi) = B([<span class="number">3</span> m],xi);          <span class="comment">% mirror left and right boundary</span></span><br><span class="line">B(yi,[<span class="number">1</span> n+<span class="number">2</span>]) = B(yi,[<span class="number">3</span> n]);          <span class="comment">% mirror top and bottom boundary</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> = <span class="title">BoundMirrorShrink</span><span class="params">(A)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(A);</span><br><span class="line">yi = <span class="number">2</span>:m<span class="number">-1</span>;</span><br><span class="line">xi = <span class="number">2</span>:n<span class="number">-1</span>;</span><br><span class="line">B = A(yi,xi);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="3-测试结果"><a href="#3-测试结果" class="headerlink" title="3.测试结果"></a>3.测试结果</h2><ul>
-<li><p>twocells</p>
-<p>主要参数：$\tau=5, \mu=0.04, \lambda=5, \nu=1.5,\epsilon=1.5, \sigma=1.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells.gif" alt="twoCells"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/twoCells_phi.jpg" alt="twoCells_phi"></p>
+<p><img src="一维码缺陷检测/images/algorithm_flowchart.png" alt="algorithm_flowchart" style="zoom: 50%;"></p>
+<h4 id="2-1条形码区域检测"><a href="#2-1条形码区域检测" class="headerlink" title="2.1条形码区域检测"></a>2.1条形码区域检测</h4><p>根据条形码区域整体呈现纵向深色线条横向水平分布、背景为均匀浅色等特点进行识别。首先对图像进行OTSU二值化并取反后，该二值图包含了条形码和部分干扰文字。之后，使用形态学滤波的方法用30×7的横向矩形核对二值图向进行膨胀，该过程可以有效地在水平方向连接条形码线条，并形成连通域，但因为纵向膨胀较小，该连通域不会受到水平干扰。最后，对二值化图形进行连通域分析，找出面积排名靠前的连通域视作条形码区域，提取边界以及单独裁剪出感兴趣区域(AOI)。该过程结果见图<a href="#flowchart">1</a>中第2步。<br>本工作也提出了一种基于HOG特征的条形码区域检测方法，该方法将图像划分为16×16的block，并统计该block内的梯度直方图（HOG），根据梯度值和梯度方向的聚集程度（在某几个梯度值/方向及其附近分布占比高于一定程度）来区分是否为条形码区域。该方法可以有效地在更复杂环境中识别条形码区域（如图<a href="#my_method">2</a>）。然而，受限于编程环境，该方法运行资源消耗较大，应用意义不大，仍然具有优化空间。</p>
+<p><img src="一维码缺陷检测/images/my_method.png" alt="基于HOG特征的条形码区域检测结果：候选block用色块标记，左侧为简单场景下地条形码结果，右侧为复杂场景下的条形码检测结果" style="zoom: 50%;"></p>
+<h4 id="2-2条形码旋转校正"><a href="#2-2条形码旋转校正" class="headerlink" title="2.2条形码旋转校正"></a>2.2条形码旋转校正</h4><p>条形码区域检测中提取了包含条形码区域的外接矩形内所包含的图像。首先使用Canny算子提取条形码边缘。之后利用霍夫变换提取线条参数($\rho$,$\theta$)，线条<em>i</em>的角度可以表示为：\</p>
+<p><script type="math/tex">\label{eq 1}
+\alpha_i=\arctan(\rho_i*\theta_i)</script>\<br>将这些角度限定在$[0, \pi)$的范围中，并求取平均值$\bar{\alpha}$，该角度可以视作图像旋转角度，将图像旋转$\pi/2-\bar{\alpha}$得到旋转校准后的图像。最后再进行上下边框的剪裁，以便进行下一步的膨胀操作，其结果见图<a href="#flowchart">1</a>的第3⃝步。</p>
+<h3 id="2-3条形码缺陷区域检测"><a href="#2-3条形码缺陷区域检测" class="headerlink" title="2.3条形码缺陷区域检测"></a>2.3条形码缺陷区域检测</h3><p>条形码旋转校正得到了垂直方向线段组成的图像。首先对其进行二值化处理，可以得到条形码掩膜$mask_0$，在此基础上使用30×1的垂直矩形核对掩膜进行垂直膨胀操作得到$mask_{dilate}$，以填补缺陷（见图<a href="#flowchart">1</a>第4步）。将垂直膨胀后的掩膜与原条形码掩膜掩膜做差分操作，可以得到近似的缺陷掩膜$mask_{defect}$（见图<a href="#flowchart">1</a>第5步）： <script type="math/tex">\label{eq 2}
+mask_{defect} =mask_{dilate}-mask_0</script>\<br>$mask_{defect}$可能会有细小的噪点，使用3×3的矩形核对其进行开运算，可以消除这些细小噪点，并的到最后缺陷结果（见图<a href="#flowchart">1</a>第6步）。</p>
+<h2 id="3-结果"><a href="#3-结果" class="headerlink" title="3.结果"></a>3.结果</h2><p>对于指定测试集合(见图<a href="#test_image">3</a>)，使用上文方法的检测结果见图<a href="#result">5</a>。可以看到，本方法有效地对测试集中的条形码缺陷进行了识别，其漏检率十分低。然而，结果中存在一些将连续的缺陷区域识别为多个缺陷区域的问题（如<a href="#result">5</a>中的(d-0)右侧）。</p>
+<p><img src="一维码缺陷检测/images/raw_images.png" alt="测试图像：(a)-(e)中各自包含了两组条形码"></p>
+<p><img src="一维码缺陷检测/images/result_0.png" alt="测试结果：(a-0) $\sim$ (e-1)分别对应了图[3](#test_image)中图像(a) $\sim$ (e)中的12幅条形码" style="zoom: 50%;"></p>
+<p><img src="一维码缺陷检测/images/result_1.png" alt="测试结果：(a-0) $\sim$ (e-1)分别对应了图[3](#test_image)中图像(a) $\sim$ (e)中的12幅条形码" style="zoom:50%;"></p>
+<h2 id="4-不足"><a href="#4-不足" class="headerlink" title="4.不足"></a>4.不足</h2><p>本文存在以下不足：</p>
+<ul>
+<li><p>形态学操作算子尺寸普适性太低，缺少自适应机制，过度依赖手动设计。</p>
 </li>
-<li><p>three</p>
-<p>主要参数：$\tau=0.5, \mu=0.4, \lambda=5, \nu=-3,\epsilon=1.5, \sigma=0.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.gif" alt="three"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/three.jpg" alt="three"></p>
+<li><p>在复杂场景下的二维码识别率很低。</p>
 </li>
-<li><p>Chunming Li等<a href="#LiChunming"><sup>1</sup></a> Fig. 3</p>
-<p>主要参数：$\tau=3, \mu=0.04, \lambda=5, \nu=3,\epsilon=1.5, \sigma=0.5$。</p>
-<p>演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.gif" alt="Li_Chunming"></p>
-<p>初始和最终的水平集函数：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/Li_Chunming.jpg" alt="Li_Chunming"></p>
-</li>
-<li><p>vessel</p>
-<p>主要参数：$\tau=5, \mu=0.04, \lambda=5, \nu=1.5,\epsilon=1.5, \sigma=1.5$。</p>
-<p>使用了鼠标选择多个点初始化水平集函数，演化过程中选择点分别作为边界内和边界外来更改水平集函数。演化过程：</p>
-<p><img src="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/vessel.gif" alt="vessel"></p>
+<li><p>过程存在一些重复运算，优化不够。</p>
 </li>
 </ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><div id="LiChunming"></div>
-
-<p>[1]Chunming Li, Chenyang Xu, Changfeng Gui and M. D. Fox, “Level set evolution without re-initialization: a new variational formulation,” 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR’05), 2005, pp. 430-436 vol. 1, doi: 10.1109/CVPR.2005.213.<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/1467299">https://ieeexplore.ieee.org/document/1467299</a>.</p>
-<div id="KASS"></div>
-
-<p>[2]Kass M, WITKIN A, TERZOPOULOS D, “SNAKES - ACTIVE CONTOUR MODELS,” INTERNATIONAL JOURNAL OF COMPUTER VISION,1987, pp. 321-331 no.4  vol.1, doi:10.1007/BF00133570.<a target="_blank" rel="noopener" href="https://link.springer.com/article/10.1007%2FBF00133570">https://link.springer.com/article/10.1007%2FBF00133570</a></p>
+<h2 id="5-代码"><a href="#5-代码" class="headerlink" title="5.代码"></a>5.代码</h2><ul>
+<li>基本算法代码使用python实现，需要opencv、numpy环境。测试图像请放于代码路径的test images/文件夹下面，程序会自动遍历并处理。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Barcode_detect</span>(<span class="params">image, top_contours=<span class="number">2</span>, dilate_len=<span class="number">30</span>, dilate_w=<span class="number">7</span></span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Binarize the input image &quot;&quot;&quot;</span></span><br><span class="line">    ret, img_bin = cv.threshold(image, <span class="number">0</span>, <span class="number">255</span>, cv.THRESH_OTSU | cv.THRESH_BINARY_INV)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Use morphological method &quot;&quot;&quot;</span></span><br><span class="line">    kernel = cv.getStructuringElement(cv.MORPH_RECT, [dilate_len, dilate_w])</span><br><span class="line">    result_mask = cv.dilate(img_bin, kernel).astype(<span class="string">&#x27;uint8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Sort contours by area &quot;&quot;&quot;</span></span><br><span class="line">    contours, hierarchy = cv.findContours(result_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)</span><br><span class="line">    contours.sort(key=<span class="keyword">lambda</span> ca: cv.contourArea(ca), reverse=<span class="literal">True</span>)</span><br><span class="line">    contours_list = []</span><br><span class="line">    barcode_section_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(top_contours):</span><br><span class="line">        (x, y, w, h) = cv.boundingRect(contours[i])</span><br><span class="line">        contours_list.append([x, y, w, h])</span><br><span class="line"></span><br><span class="line">        barcode_section = image[y:y+h, x:x+w]</span><br><span class="line">        barcode_section_list.append(barcode_section)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> contours_list, barcode_section_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_barcode_box</span>(<span class="params">image, bound_list, color=<span class="number">255</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> bound <span class="keyword">in</span> bound_list:</span><br><span class="line">        (x, y, w, h) = bound</span><br><span class="line">        cv.rectangle(image, (x, y), (x+w, y+h), color, <span class="number">5</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rotate_eliminate</span>(<span class="params">barcode_img, cut_edge=<span class="number">30</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Averaged gradient angle &quot;&quot;&quot;</span></span><br><span class="line">    barcode_edge = cv.Canny(barcode_img, <span class="number">50</span>, <span class="number">150</span>)</span><br><span class="line">    lines = np.array(cv.HoughLinesP(barcode_edge, <span class="number">1</span>, np.pi / <span class="number">180</span>, <span class="number">70</span>, minLineLength=<span class="number">60</span>, maxLineGap=<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">    dx = lines[:, <span class="number">0</span>, <span class="number">2</span>] - lines[:, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">    dy = lines[:, <span class="number">0</span>, <span class="number">3</span>] - lines[:, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">    thetas = np.arctan2(dy, dx) * <span class="number">180</span> / np.pi</span><br><span class="line">    <span class="keyword">for</span> i, theta <span class="keyword">in</span> <span class="built_in">zip</span>(<span class="built_in">range</span>(<span class="built_in">len</span>(thetas)), thetas):</span><br><span class="line">        <span class="keyword">if</span> theta &lt; <span class="number">0</span>:</span><br><span class="line">            thetas[i] += <span class="number">180</span></span><br><span class="line">    theta = np.mean(thetas)</span><br><span class="line">    <span class="comment"># print(theta)</span></span><br><span class="line"></span><br><span class="line">    (h, w) = barcode_img.shape</span><br><span class="line">    cX = w // <span class="number">2</span></span><br><span class="line">    cY = h // <span class="number">2</span></span><br><span class="line">    RM = cv.getRotationMatrix2D((cX, cY),  theta - <span class="number">90</span>, <span class="number">1.0</span>)</span><br><span class="line">    barcode_img = cv.warpAffine(barcode_img, RM, (w, h))</span><br><span class="line">    barcode_img = barcode_img[cut_edge:h-cut_edge, :]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> barcode_img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">defect_detect</span>(<span class="params">image, dilate_len=<span class="number">15</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Binarize the input image &quot;&quot;&quot;</span></span><br><span class="line">    ret, img_bin = cv.threshold(image, <span class="number">0</span>, <span class="number">255</span>, cv.THRESH_OTSU | cv.THRESH_BINARY_INV)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Use morphological method &quot;&quot;&quot;</span></span><br><span class="line">    kernel = cv.getStructuringElement(cv.MORPH_RECT, [dilate_len*<span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">    img_bin_d = cv.dilate(img_bin, kernel).astype(<span class="string">&#x27;uint8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Find max connected area &quot;&quot;&quot;</span></span><br><span class="line">    contours, hierarchy = cv.findContours(img_bin_d, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)</span><br><span class="line">    area = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(contours)):</span><br><span class="line">        area.append(cv.contourArea(contours[j]))</span><br><span class="line">    max_idx = np.argmax(area)</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(contours)):</span><br><span class="line">        <span class="keyword">if</span> k != max_idx:</span><br><span class="line">            cv.fillPoly(img_bin, [contours[k]], <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; dilate &amp; diff &quot;&quot;&quot;</span></span><br><span class="line">    kernel = cv.getStructuringElement(cv.MORPH_RECT, [<span class="number">1</span>, dilate_len // <span class="number">2</span>])</span><br><span class="line">    img_bin_d1 = cv.erode(img_bin, kernel).astype(<span class="string">&#x27;uint8&#x27;</span>)</span><br><span class="line">    kernel = cv.getStructuringElement(cv.MORPH_RECT, [<span class="number">1</span>, dilate_len * <span class="number">2</span>])</span><br><span class="line">    img_bin_d1 = cv.dilate(img_bin_d1, kernel).astype(<span class="string">&#x27;uint8&#x27;</span>)</span><br><span class="line">    img_bin_diff = img_bin_d1 - img_bin</span><br><span class="line">    cv.convertScaleAbs(img_bin_diff)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Open &quot;&quot;&quot;</span></span><br><span class="line">    kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, [<span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line">    result_mask = cv.morphologyEx(img_bin_diff, cv.MORPH_OPEN, kernel)</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot; Find all connected area &quot;&quot;&quot;</span></span><br><span class="line">    contours, hierarchy = cv.findContours(result_mask, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)</span><br><span class="line">    bound_list = []</span><br><span class="line">    <span class="keyword">for</span> contour <span class="keyword">in</span> contours:</span><br><span class="line">        (x, y, w, h) = cv.boundingRect(contour)</span><br><span class="line">        bound_list.append([x, y, w, h])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bound_list, result_mask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    direction = <span class="string">&#x27;test images/&#x27;</span></span><br><span class="line">    files = os.listdir(direction)</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">        file_path = direction + file</span><br><span class="line">        img_rgb = cv.imread(file_path)</span><br><span class="line">        img = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27; Image processing section&#x27;&#x27;&#x27;</span></span><br><span class="line">        barcode_area, barcode_imgs = Barcode_detect(img)</span><br><span class="line">        <span class="comment"># img = draw_barcode_box(img, barcode_area)</span></span><br><span class="line">        <span class="keyword">for</span> index, barcode_img <span class="keyword">in</span> <span class="built_in">zip</span>(<span class="built_in">range</span>(<span class="built_in">len</span>(barcode_imgs)), barcode_imgs):</span><br><span class="line">            barcode_img = rotate_eliminate(barcode_img)</span><br><span class="line">            bounds, img = defect_detect(barcode_img)</span><br><span class="line">            im_size = (barcode_img.shape[<span class="number">1</span>] * <span class="number">5</span>, barcode_img.shape[<span class="number">0</span>] * <span class="number">5</span>)</span><br><span class="line">            barcode_img_rgb = cv.cvtColor(barcode_img, cv.COLOR_GRAY2BGR)</span><br><span class="line">            barcode_img_rgb = cv.resize(barcode_img_rgb, im_size)</span><br><span class="line">            bounds = <span class="number">5</span>*np.array(bounds)</span><br><span class="line">            barcode_img_rgb = draw_barcode_box(barcode_img_rgb, bounds, (<span class="number">100</span>, <span class="number">250</span>, <span class="number">150</span>))</span><br><span class="line">            <span class="string">&#x27;&#x27;&#x27; Display the result&#x27;&#x27;&#x27;</span></span><br><span class="line">            cv.namedWindow(file_path + <span class="string">&#x27;image&#x27;</span> + <span class="built_in">str</span>(index), cv.WINDOW_NORMAL)</span><br><span class="line">            cv.setWindowProperty(file, cv.WINDOW_FULLSCREEN, cv.WND_PROP_FULLSCREEN)</span><br><span class="line">            cv.imshow(file_path + <span class="string">&#x27;image&#x27;</span> + <span class="built_in">str</span>(index), barcode_img_rgb)</span><br><span class="line">            cv.imwrite(<span class="string">&#x27;doc/&#x27;</span> + file + <span class="string">&#x27;_bc_&#x27;</span> + <span class="built_in">str</span>(index) + <span class="string">&#x27;.png&#x27;</span>, barcode_img_rgb)</span><br><span class="line">            key_input = cv.waitKey(<span class="number">0</span>)</span><br><span class="line">            cv.destroyWindow(file_path + <span class="string">&#x27;image&#x27;</span> + <span class="built_in">str</span>(index))</span><br><span class="line">            <span class="keyword">if</span> key_input == <span class="number">27</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
 
@@ -288,27 +235,11 @@ g=\frac{1}{1+|\nabla G_\sigma * I|^2}
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">level set</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">水平集</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">复现</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">图像分割</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">matlab</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -364,7 +295,7 @@ g=\frac{1}{1+|\nabla G_\sigma * I|^2}
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://hyderpang.github.io/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://hyderpang.github.io/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -378,15 +309,11 @@ g=\frac{1}{1+|\nabla G_\sigma * I|^2}
   
 <nav id="article-nav">
   
-    <a href="/2021/11/15/%E4%B8%80%E7%BB%B4%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          一维码缺陷检测
-        
-      </div>
-    </a>
   
+    <a href="/2021/11/15/%E6%97%A0%E9%9C%80%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%B0%B4%E5%B9%B3%E9%9B%86%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无需重新初始化的水平集演化模型复现</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
